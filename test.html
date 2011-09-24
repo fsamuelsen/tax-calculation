@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Jasmine Spec Runner</title>
+
+	<link rel="shortcut icon" type="image/png" href="lib/jasmine/jasmine_favicon.png">
+
+	<link rel="stylesheet" type="text/css" href="lib/jasmine/jasmine.css">
+</head>
+
+<body>
+	<script src="lib/jasmine/jasmine.js"></script>
+	<script src="lib/jasmine/jasmine-html.js"></script>
+	<script src="lib/flib/flib.js"></script>
+	
+	<script>function implement() {throw 'not implemented';}</script>
+
+	<!-- include spec files here... -->
+	<script src="specs/s-calculator.js"></script>
+
+	<!-- include source files here... -->
+	<script src="src/calculator.js"></script>
+
+	<script type="text/javascript">
+		(function() {
+			var jasmineEnv = jasmine.getEnv();
+			jasmineEnv.updateInterval = 1000;
+
+			var trivialReporter = new jasmine.TrivialReporter();
+
+			jasmineEnv.addReporter(trivialReporter);
+
+			jasmineEnv.specFilter = function(spec) {
+				return trivialReporter.specFilter(spec);
+			};
+
+			var currentWindowOnload = window.onload;
+
+			window.onload = function() {
+				if (currentWindowOnload) {
+					currentWindowOnload();
+				}
+				execJasmine();
+			};
+
+			function execJasmine() {
+				jasmineEnv.execute();
+			}
+
+		})();
+	</script>
+</body>
+</html>
