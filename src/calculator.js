@@ -9,9 +9,23 @@ Higher than 40,230		45%
 */
 
 var Calculator = function(data) {
-	var overflow = data.overflow;
+	var rates = data.rates || [];
+		overflow = data.overflow;
+		
 	function calc(amount) {
-		var tax = amount*overflow;
+		var tax = 0,
+			remaining = amount;
+		
+		function calculatingRates(rate) {
+			var amount = Math.min(rate.ceil, remaining);
+			remaining -= amount;
+			tax += amount * rate.tax;
+			return remaining > 0;
+		}
+		
+		if(rates.every(calculatingRates)) {
+			tax += remaining * overflow;
+		}
 		return amount + tax;
 	};
 	
