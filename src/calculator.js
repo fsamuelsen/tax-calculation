@@ -7,3 +7,15 @@ Up to 5,070				10%
 21,241 up to 40,230		33%
 Higher than 40,230		45%
 */
+
+var Calculator = function(data) {
+	var overflow = data.overflow;
+	function calc(amount) {
+		var tax = amount*overflow;
+		return amount + tax;
+	};
+	
+	return {
+		calculate: calc
+	};
+};
