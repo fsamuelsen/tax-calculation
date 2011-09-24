@@ -7,29 +7,45 @@ Up to 5,070				10%
 21,241 up to 40,230		33%
 Higher than 40,230		45%
 */
-
-var Calculator = function(data) {
-	var rates = data.rates || [];
-		overflow = data.overflow;
-		
-	function calc(amount) {
-		var tax = 0,
-			remaining = amount;
-		
-		function calculatingRates(rate) {
-			var amount = Math.min(rate.ceil, remaining);
-			remaining -= amount;
-			tax += amount * rate.tax;
-			return remaining > 0;
-		}
-		
-		if(rates.every(calculatingRates)) {
-			tax += remaining * overflow;
-		}
-		return amount + tax;
-	};
+var Calculator = (function(global) {
+	'use strict';
 	
-	return {
-		calculate: calc
+	return function(data) {
+		var rates = data.rates || [],
+			overflow = data.overflow;
+		
+		function prepareRates(rates, rate) {
+			var previousRate = rates[rates.length-1] || { ceil: 0 },
+				range = rate.ceil - previousRate.ceil;
+			
+			rates.push({
+				ceil: rate.ceil,
+				tax: rate.tax,
+				range: range
+			});
+			return rates;
+		}
+		rates = rates.reduce(prepareRates, []);
+		
+		function calc(amount) {
+			var tax = 0,
+				remaining = amount;
+			
+			function calculatingRates(rate) {
+				var amount = Math.min(rate.range, remaining);
+				remaining -= amount;
+				tax += amount * rate.tax;
+				return remaining > 0;
+			}
+			
+			if(rates.every(calculatingRates)) {
+				tax += remaining * overflow;
+			}
+			return amount + tax;
+		};
+		
+		return {
+			calculate: calc
+		};
 	};
-};
+})(this);
