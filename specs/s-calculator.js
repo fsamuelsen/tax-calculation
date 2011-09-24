@@ -1,6 +1,6 @@
 describe('Calculator', function() {
 	var subject;
-	describe('No rates', function() {
+	describe('When having no rates', function() {
 		var data;
 		beforeEach(function() {
 			data = {
@@ -16,7 +16,7 @@ describe('Calculator', function() {
 			expect(subject.calculateTax(600)).toEqual(60);
 		});
 	});
-	describe('One rate', function() {
+	describe('When having one rate', function() {
 		var data;
 		beforeEach(function() {
 			data = {
@@ -31,7 +31,7 @@ describe('Calculator', function() {
 			subject = new Calculator(data);
 		});
 		
-		it('should calculate below ceiling correctly', function() {
+		it('should calculate below the ceiling correctly', function() {
 			expect(subject.calculateTax(200)).toEqual(20);
 		});
 		
