@@ -10,10 +10,10 @@ describe('Calculator', function() {
 		});
 		
 		it('should calculate 300 correctly', function() {
-			expect(subject.calculate(300)).toEqual(330);
+			expect(subject.calculateTax(300)).toEqual(30);
 		});
 		it('should calculate 600 correctly', function() {
-			expect(subject.calculate(600)).toEqual(660);
+			expect(subject.calculateTax(600)).toEqual(60);
 		});
 	});
 	describe('One rate', function() {
@@ -32,16 +32,16 @@ describe('Calculator', function() {
 		});
 		
 		it('should calculate below ceiling correctly', function() {
-			expect(subject.calculate(200)).toEqual(220);
+			expect(subject.calculateTax(200)).toEqual(20);
 		});
 		
 		it('should calculate on the ceiling correctly', function() {
-			expect(subject.calculate(400)).toEqual(440);
+			expect(subject.calculateTax(400)).toEqual(40);
 		});
 		
 		it('should calculate overflow correctly', function() {
-			// result = 400*1.1 + 100*1.2 = 440 + 120 = 560
-			expect(subject.calculate(500)).toEqual(560);
+			// result = 400*.1 + 100*.2 = 40 + 20 = 60
+			expect(subject.calculateTax(500)).toEqual(60);
 		});
 	});
 	describe('When calculating two rates', function() {
@@ -65,26 +65,26 @@ describe('Calculator', function() {
 		
 		describe('If the amount is within the first rate', function() {
 			it('should calculate below first rate correctly', function() {
-				expect(subject.calculate(200)).toEqual(220);
+				expect(subject.calculateTax(200)).toEqual(20);
 			});
 			it('should calculate on first rate correctly', function() {
-				expect(subject.calculate(400)).toEqual(440);
+				expect(subject.calculateTax(400)).toEqual(40);
 			});
 		});
 		describe('If the amount is withing the second rate', function() {
 			it('should calculate below first rate correctly', function() {
-				// result = 400*1.1 + 100*1.2 = 440 + 120 = 560
-				expect(subject.calculate(500)).toEqual(560);
+				// result = 400*.1 + 100*.2 = 40 + 20 = 60
+				expect(subject.calculateTax(500)).toEqual(60);
 			});
 			it('should calculate on first rate correctly', function() {
-				// result = 400*1.1 + 200*1.2 = 440 + 240 = 680
-				expect(subject.calculate(600)).toEqual(680);
+				// result = 400*.1 + 200*.2 = 40 + 40 = 80
+				expect(subject.calculateTax(600)).toEqual(80);
 			});
 		});
 		describe('If the amount overflow the rates', function() {
 			it('should calculate overflow correctly', function() {
-				// result = 400*1.1 + 200*1.2 + 100*1.3 = 440 + 240 + 130 = 920
-				expect(subject.calculate(700)).toEqual(810);
+				// result = 400*.1 + 200*.2 + 100*.3 = 40 + 40 + 30 = 110
+				expect(subject.calculateTax(700)).toEqual(110);
 			});
 		});
 	});

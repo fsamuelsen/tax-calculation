@@ -41,11 +41,11 @@ var Calculator = (function(global) {
 			if(rates.every(calculatingRates)) {
 				tax += remaining * overflow;
 			}
-			return amount + tax;
+			return tax;
 		};
 		
 		return {
-			calculate: calc
+			calculateTax: calc
 		};
 	};
 })(this);
