@@ -88,4 +88,50 @@ describe('Calculator', function() {
 			});
 		});
 	});
+	describe('The Israeli system', function() {
+		var data;
+		beforeEach(function() {
+			data = {
+				rates: [
+					{
+						ceil: 5070,
+						tax: .1
+					},
+					{
+						ceil: 8660,
+						tax: .14
+					},
+					{
+						ceil: 14070,
+						tax: .23
+					},
+					{
+						ceil: 21240,
+						tax: .30
+					},
+					{
+						ceil: 40230,
+						tax: .33
+					}
+				],
+				overflow: .45
+			};
+			subject = new Calculator(data);
+		});
+		it('should calculate 5,000 correctly', function() {
+			expect(subject.calculateTax(5000)).toEqual(500);
+		});
+		it('should calculate 5,800 correctly', function() {
+			expect(subject.calculateTax(5800)).toEqual(609.2);
+		});
+		it('should calculate 9,000 correctly', function() {
+			expect(subject.calculateTax(9000)).toEqual(1087.8);
+		});
+		it('should calculate 15,000 correctly', function() {
+			expect(subject.calculateTax(15000)).toEqual(2532.9);
+		});
+		it('should calculate 50,000 correctly', function() {
+			expect(subject.calculateTax(50000)).toEqual(15068.1);
+		});
+	});
 });
